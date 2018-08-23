@@ -1,1 +1,53 @@
-/Users/adam/.gitconfig
+[user]
+	name = Adam Schuck
+	email = aschuck@gmail.com
+
+[alias]
+  b = branch
+  co = checkout
+  d = diff
+  dm = diff master
+	st = status -sb
+	la = !git config -l | grep alias | cut -c 7-
+	tree = log --graph --oneline --decorate --abbrev-commit
+	undo = reset --soft HEAD^
+	lastbranches = !git for-each-ref --sort=-committerdate refs/heads | cut -c60- | headprunebranches
+	lsv = log --pretty=format:'%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short --numstat
+	ls = log --pretty=format:'%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short
+	dc = diff --cached
+	diff = diff --word-diff
+	listtags = log --tags --simplify-by-decoration --pretty='format:%ai %d'
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[init]
+	templatedir = /Users/adam/.git-templates
+[branch]
+	autosetuprebase = always
+[branch "master"]
+	rebase = true
+[branch "dev"]
+	rebase = true
+[push]
+	default = simple
+[color]
+	ui = true
+	status = auto
+	branch = auto
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[core]
+	excludesfile = /Users/adam/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
