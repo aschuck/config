@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Merges in the latest master to this branch.
+OLD_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+if [ "${OLD_BRANCH}" = "master" ]; then
+  echo "You're on master, silly"
+  exit 1
+fi
+
+git stash save ${OLD_BRANCH} && \
+git co master && \
+git pull && \
+git co $OLD_BRANCH && \
+git rebase master
+
+if [ $? -eq 0 ]; then
+  STASH=`git stash list | grep $OLD_BRANCH | cut -d':' -f1`
+  if [[ ! -z ${STASH} ]]; then
+    git stash pop
+  fi
+fi

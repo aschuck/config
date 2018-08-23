@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Submits a branch
+
+# Merges in the latest master to this branch.
+OLD_BRANCH=`git rev-parse --abbrev-ref HEAD`
+reup && \
+npm run test && \
+git co master && \
+git merge $OLD_BRANCH --ff-only && \
+git push origin && \
+git branch -d $OLD_BRANCH
+
+#killall flow
